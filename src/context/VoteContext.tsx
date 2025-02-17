@@ -10,16 +10,27 @@ interface VoteContextType {
 const VoteContext = createContext<VoteContextType | undefined>(undefined);
 
 export const VoteProvider = ({ children }: { children: ReactNode }) => {
-  const [votes, setVotes] = useState<Record<string, Record<string, number>>>({});
+  const [votes, setVotes] = useState<Record<string, Record<string, number>>>(() => {
+    if (typeof window !== "undefined") {
+      const storedVotes = localStorage.getItem("votes");
+      return storedVotes ? JSON.parse(storedVotes) : {};
+    }
+    return {};
+  });
 
   const addVote = (jokeId: string, emoji: string) => {
-    setVotes((prevVotes) => ({
-      ...prevVotes,
-      [jokeId]: {
-        ...prevVotes[jokeId],
-        [emoji]: (prevVotes[jokeId]?.[emoji] || 0) + 1,
-      },
-    }));
+    setVotes((prevVotes) => {
+      const updatedVotes = {
+        ...prevVotes,
+        [jokeId]: {
+          ...prevVotes[jokeId],
+          [emoji]: (prevVotes[jokeId]?.[emoji] || 0) + 1,
+        },
+      };
+
+      localStorage.setItem("votes", JSON.stringify(updatedVotes));
+      return updatedVotes;
+    });
   };
 
   return (

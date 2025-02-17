@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎪 Voting Game - Jokes On You! 🤡
 
-## Getting Started
+🚀 A fun Next.js & Node.js web app where users **vote on daily jokes** using **emoji reactions**! Built with **React, Express, MongoDB, and Tailwind CSS**, this app brings humor and interactivity together.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Features
+
+### ✅ **Frontend (Next.js)**
+
+- 🎭 **Random Joke Display** - Shows a **random joke** in a Q&A format.
+- 🗳️ **Emoji Voting System** - Users **vote** on jokes with different emoji reactions.
+- 🔄 **"Next Joke" Button** - Fetches a new joke from the API.
+- 💾 **Persistent Voting** - Votes are stored in **localStorage**, so they remain after refresh!
+- 🎨 **Modern UI** - Styled with **Tailwind CSS** and animations using **Framer Motion**.
+- 📱 **Mobile Responsive** - Works great on all screen sizes!
+
+### 🛠️ **Backend (Node.js + Express)**
+
+- 📡 **MongoDB Database** - Stores jokes and votes.
+- 🏆 **Tracks Votes Per Joke** - Each joke maintains its own voting history.
+- 🌍 **CORS Enabled** - Allows frontend-backend communication.
+- 🌐 **Public API Integration** - Fetches jokes from **[TeeHee.dev API](https://teehee.dev/)**.
+- 🔀 **CRUD Operations** - Create, Read, Update, Delete jokes via API.
+
+---
+
+## 🚀 **Tech Stack**
+
+| **Frontend**    | **Backend**        |
+| --------------- | ------------------ |
+| Next.js (React) | Node.js (Express)  |
+| Tailwind CSS    | MongoDB (Mongoose) |
+| Framer Motion   | CORS Middleware    |
+| LocalStorage    | TeeHee.dev API     |
+
+---
+
+## ⚙️ **Installation & Setup**
+
+### 1️⃣ **Clone the Repository**
+
+```sh
+git clone git@github.com:ananotopuria/jokeVotingGame.git
+cd voting-game
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ **Backend Setup**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cd voting-game-backend
+npm install
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open the .env file and replace <USERNAME> and <PASSWORD> with your MongoDB credentials.
+Example .env file:
 
-## Learn More
+```sh
 
-To learn more about Next.js, take a look at the following resources:
+MONGO_URI=mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.b3lp9.mongodb.net/voting-game?retryWrites=true&w=majority&appName=Cluster0
+PORT=5001
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Run the Backend Server:
 
-## Deploy on Vercel
+```sh
+npx ts-node src/server.ts
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3️⃣ **Frontend Setup**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+cd ../voting-game-frontend
+npm install
+npm run dev
+```
+
+

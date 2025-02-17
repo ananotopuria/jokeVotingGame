@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getJoke, voteJoke } from "../lib/api";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import VotingButtons from "./VotingButtons"; 
+import VotingButtons from "./VotingButtons";
 
 interface Joke {
   _id: string;
@@ -16,10 +16,10 @@ interface Joke {
 
 const JokeCard = () => {
   const [joke, setJoke] = useState<Joke | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const fetchJoke = async () => {
+  const fetchJoke = useCallback(async () => {
     setLoading(true);
     setShowAnswer(false);
     try {
@@ -30,10 +30,21 @@ const JokeCard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchJoke();
+  }, [fetchJoke]);
 
   const handleVote = async (emoji: string) => {
     if (!joke) return;
+
+    const updatedVotes = joke.votes.map((v) =>
+      v.label === emoji ? { ...v, value: v.value + 1 } : v
+    );
+
+    setJoke({ ...joke, votes: updatedVotes });
+
     try {
       const updatedJoke = await voteJoke(joke._id, emoji);
       setJoke(updatedJoke);
@@ -42,17 +53,16 @@ const JokeCard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchJoke();
-  }, []);
+  const buttonMotionProps = {
+    whileHover: { scale: 1.1 },
+    whileTap: { scale: 0.9 },
+  };
 
   return (
-    <div className="p-6 lg:p-10 max-w-xl mx-auto bg-[#f91d1d] shadow-lg text-center border-4 border-dotted">
-      {loading && (
+    <div className="p-6 lg:p-10 flex flex-col justify-center text-center mx-auto bg-[#f91d1d] shadow-lg border-4 border-dotted w-[50rem] h-[50rem]">
+      {loading ? (
         <p className="text-[#fffbde] font-smokum">Wait For IT... 🥁</p>
-      )}
-
-      {joke && (
+      ) : joke ? (
         <>
           <h2 className="text-2xl lg:text-4xl font-bold mb-3 text-[#fffbde] font-rye">
             🎪 {joke.question}
@@ -61,8 +71,7 @@ const JokeCard = () => {
             <motion.button
               className="px-4 py-2 text-2xl text-[#fffbde] rounded-lg font-smokum mb-6"
               onClick={() => setShowAnswer(true)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              {...buttonMotionProps}
             >
               🪄 🎩 Show Answer 🐇
             </motion.button>
@@ -88,13 +97,14 @@ const JokeCard = () => {
           <VotingButtons joke={joke} handleVote={handleVote} />
           <motion.button
             onClick={fetchJoke}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-            className="mt-10 cursor-pointer"
+            {...buttonMotionProps}
+            className="mt-10 cursor-pointer flex justify-center"
           >
-            <Image src="/joke.png" alt="Next Joke" width={120} height={120} />
+            <Image src="/joke.png" alt="Next Joke" width={160} height={120} />
           </motion.button>
         </>
+      ) : (
+        <p className="text-[#fffbde] font-smokum">No joke found 🍿</p>
       )}
     </div>
   );

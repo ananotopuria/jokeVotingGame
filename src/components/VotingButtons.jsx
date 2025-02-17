@@ -1,19 +1,25 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useVotes } from "@/context/VoteContext";
 
 const circusColors = ["#FF4136", "#FFDC00", "#0074D9", "#FF851B", "#2ECC40"];
 
 const VotingButtons = ({ joke, handleVote }) => {
+  const { votes, addVote } = useVotes();
   const [colors, setColors] = useState([]);
 
   useEffect(() => {
-    setColors(joke.availableVotes.map(() => circusColors[Math.floor(Math.random() * circusColors.length)]));
+    setColors(
+      joke.availableVotes.map(
+        () => circusColors[Math.floor(Math.random() * circusColors.length)]
+      )
+    );
   }, [joke]);
 
   return (
     <div className="mt-4 flex justify-center gap-4 relative">
       {joke.availableVotes.map((emoji, index) => {
-        const voteCount = joke.votes.find((v) => v.label === emoji)?.value || 0;
+        const voteCount = votes[joke._id]?.[emoji] || 0;
         const color = colors[index];
 
         return (
@@ -24,9 +30,12 @@ const VotingButtons = ({ joke, handleVote }) => {
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { delay: index * 0.1, type: "spring", stiffness: 100 },
+                  transition: {
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                  },
                 }}
-                style={{ backgroundColor: "x" }}
                 className="absolute top-14 text-white text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2 border-dotted border-[#fffbde] shadow-lg"
               >
                 {voteCount}
@@ -34,7 +43,10 @@ const VotingButtons = ({ joke, handleVote }) => {
             )}
 
             <motion.button
-              onClick={() => handleVote(emoji)}
+              onClick={() => {
+                addVote(joke._id, emoji);
+                handleVote(emoji);
+              }}
               whileHover={{
                 scale: 1.1,
                 rotate: Math.random() * 10 - 5,
@@ -45,7 +57,11 @@ const VotingButtons = ({ joke, handleVote }) => {
               animate={{
                 opacity: 1,
                 y: 0,
-                transition: { delay: index * 0.1, type: "spring", stiffness: 120 },
+                transition: {
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 120,
+                },
               }}
               className="text-3xl font-bold py-3 px-4 border-2 border-dotted border-[#fffbde] shadow-lg rounded-xl"
               style={{

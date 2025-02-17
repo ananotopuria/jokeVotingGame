@@ -76,5 +76,11 @@ cd ../voting-game-frontend
 npm install
 npm run dev
 ```
+## 🪼 Screenshots
+
+<img width="361" alt="Screenshot2" src="https://github.com/user-attachments/assets/65e8de5d-a010-4754-a7ee-2e4274c7ca13" />
+<img width="1901" alt="Screenshot" src="https://github.com/user-attachments/assets/b7797bde-2e7e-457c-b3ef-3f7476037c0a" />
+<img width="1912" alt="Screenshot1" src="https://github.com/user-attachments/assets/39be4333-d380-4bad-9a36-2685de2742e9" />
+
 
 

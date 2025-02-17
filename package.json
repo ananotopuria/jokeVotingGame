@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.30.0",
+    "aceternity-ui": "^0.2.2",
     "axios": "^1.7.9",
+    "clsx": "^2.1.1",
+    "motion": "^12.4.3",
     "next": "15.1.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.26.0",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",

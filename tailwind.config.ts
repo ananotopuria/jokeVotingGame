@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily:{
+        smokum: ["Smokum", "serif"],
+        rye: ["Rye", "serif"]
+      },
     },
   },
   plugins: [],

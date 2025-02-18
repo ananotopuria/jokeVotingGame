@@ -17,8 +17,16 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.static('../out'));
+app.use(express.static('../public'));
 
 app.use("/api", jokeRoutes);
+
+app.get('*', (req, res) => {
+  res.sendFile("index.html", { root: '../out' });
+});
+
+
 
 const PORT = 5001; 
 
@@ -32,3 +40,5 @@ server.on("error", (error: NodeJS.ErrnoException) => {
     console.error("❌ Server error:", error);
   }
 });
+
+

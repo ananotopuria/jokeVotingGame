@@ -83,7 +83,7 @@ const JokeCard = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <Image
-                src="/spotlight-7833277_960_720.png"
+                src="spotlight-7833277_960_720.png"
                 alt="Next Joke"
                 width={300}
                 height={160}
@@ -100,7 +100,7 @@ const JokeCard = () => {
             {...buttonMotionProps}
             className="mt-10 cursor-pointer flex justify-center"
           >
-            <Image src="/joke.png" alt="Next Joke" width={160} height={120} />
+            <Image src="joke.png" alt="Next Joke" width={160} height={120} />
           </motion.button>
         </>
       ) : (
